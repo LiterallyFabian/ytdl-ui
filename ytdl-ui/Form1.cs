@@ -18,6 +18,31 @@ namespace ytdl_ui
             buttonMp4.Enabled = false;
             buttonMp3.Enabled = false;
             buttonThumbnail.Enabled = false;
+
+            if (!PathHelper.ExistsOnPath("youtube-dl.exe") && !File.Exists("youtube-dl.exe")
+                || !PathHelper.ExistsOnPath("ffmpeg.exe") && !File.Exists("ffmpeg.exe"))
+            {
+                DialogResult res = MessageBox.Show(
+                    "youtube-dl.exe and/or ffmpeg.exe could not be found, but are needed to run the program. Would you like to install them?" +
+                    "\n\nYes - Install them automatically" +
+                    "\nNo - Continue without installing" +
+                    "\nCancel - Close the program" , 
+                    "Missing prerequisites", 
+                    MessageBoxButtons.YesNoCancel);
+
+                switch (res)
+                {
+                    case DialogResult.Yes:
+                        InstallPrerequisites();
+                        break;
+                    case DialogResult.No:
+                        // Continue without installing
+                        break;
+                    default:
+                        Application.Exit();
+                        break;
+                }
+            }
         }
 
         private void buttonMp4_Click(object sender, EventArgs e)
@@ -100,6 +125,31 @@ namespace ytdl_ui
                 
                 // delete temp file
                 File.Delete(tmpFile);
+            }
+        }
+
+        private void InstallPrerequisites()
+        {
+            // install youtube-dl
+            Process ytdlProcess = new Process();
+            ytdlProcess.StartInfo.FileName = "curl.exe";
+            ytdlProcess.StartInfo.Arguments = "-L -o youtube-dl.exe https://yt-dl.org/latest/youtube-dl.exe";
+            ytdlProcess.Start();
+            ytdlProcess.WaitForExit();
+            
+            // install ffmpeg
+            Process ffmpegProcess = new Process();
+            ffmpegProcess.StartInfo.FileName = "curl.exe";
+            ffmpegProcess.StartInfo.Arguments = "-L -o ffmpeg.exe https://github.com/LiterallyFabian/ytdl-ui/raw/master/ytdl-ui/ffmpeg.exe";
+            ffmpegProcess.Start();
+            ffmpegProcess.WaitForExit();
+        }
+
+        private void buttonPrereqs_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to install the prerequisites? If the program is working, you do not need them.", "Install prerequisites", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                InstallPrerequisites();
             }
         }
     }

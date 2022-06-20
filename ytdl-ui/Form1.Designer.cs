@@ -36,6 +36,7 @@ namespace ytdl_ui
             this.buttonMp3 = new System.Windows.Forms.Button();
             this.buttonThumbnail = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonPrereqs = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // inputUrl
@@ -84,11 +85,22 @@ namespace ytdl_ui
             this.label1.TabIndex = 4;
             this.label1.Text = "Enter URL";
             // 
+            // buttonPrereqs
+            // 
+            this.buttonPrereqs.Location = new System.Drawing.Point(255, 63);
+            this.buttonPrereqs.Name = "buttonPrereqs";
+            this.buttonPrereqs.Size = new System.Drawing.Size(125, 33);
+            this.buttonPrereqs.TabIndex = 5;
+            this.buttonPrereqs.Text = "install prereqs";
+            this.buttonPrereqs.UseVisualStyleBackColor = true;
+            this.buttonPrereqs.Click += new System.EventHandler(this.buttonPrereqs_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(392, 121);
+            this.Controls.Add(this.buttonPrereqs);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonThumbnail);
             this.Controls.Add(this.buttonMp3);
@@ -101,6 +113,8 @@ namespace ytdl_ui
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button buttonPrereqs;
 
         private System.Windows.Forms.Label label1;
 
